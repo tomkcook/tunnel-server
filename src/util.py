@@ -21,6 +21,7 @@ def startTunnel(remoteIP, localIP, bridge=None):
             "ip link set {} master {}".format(name, bridge))
         if result.returncode != 0:
             logging.error("Failed to slave gretap tunnel {} to bridge {}: {}".format(name, bridge, result.stdout))
+    result = command("ip link set {} up".format(name))
 
 def stopTunnel(remoteIP):
     name = remoteIP.replace(" ", "")
