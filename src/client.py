@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from argparse import ArgumentParser
-from util import startTunnel, stopTunnel, addressesForInterface
+from util import startTunnel, stopTunnel, addressesForInterface, srcAddressForDst
 import logging
 import signal
 import requests
@@ -21,7 +21,7 @@ def main():
     
     src = srcAddressForDst(args.remoteIP)
     if src is None:
-        logging.error("Could not determine source address for destination {}.", args.remoteIP)
+        logging.error("Could not determine source address for destination {}.".format(args.remoteIP))
         return
 
     response = requests.get("http://{}:5000/connect".format(args.remoteIP))

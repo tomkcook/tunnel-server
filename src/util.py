@@ -10,7 +10,7 @@ def command(args):
     return result
 
 def startTunnel(remoteIP, localIP, bridge=None):
-    name = remoteIP.replace(" ", "")
+    name = 't{}'.format(remoteIP.replace(".", ""))
     result = command(
         "ip link add {} type gretap remote {} local {}".format(name, remoteIP, localIP))
     if result.returncode != 0:
@@ -35,8 +35,10 @@ def addressesForInterface(iface, family=ni.AF_INET):
 def srcAddressForDst(dst):
     result = command("ip route get {}".format(dst))
     if result.returncode != 0:
+        logging.warn("Returned code {}".format(result.returncode))
         return None
-    words = result.stdout.split(" \n")
+    words = result.stdout.split()
+    print(words)
     if 'src' not in words:
         return None
     idx = words.index('src')
