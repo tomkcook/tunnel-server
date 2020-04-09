@@ -24,7 +24,8 @@ def startTunnel(remoteIP, localIP, bridge=None):
     result = command("ip link set {} up".format(name))
 
 def stopTunnel(remoteIP):
-    name = remoteIP.replace(" ", "")
+    name = remoteIP.replace(" ", "").replace('.', '')
+    name = 't' + name
     result = command("ip link del {}".format(name))
 
 def addressesForInterface(iface, family=ni.AF_INET):
